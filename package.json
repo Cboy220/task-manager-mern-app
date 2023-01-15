@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node server/index.js",
-    "server": "node server/index.js"
+    "server": "node server/index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\""
   },
   "keywords": [],
   "author": "RAKIB",
@@ -20,6 +22,7 @@
     "mongoose": "^6.8.3"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"
   }
 }
