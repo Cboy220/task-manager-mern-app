@@ -1,9 +1,14 @@
 import './App.css';
+import { Toaster } from 'react-hot-toast';
+import { TaskList } from './components';
 
 function App() {
   return (
     <div className="App">
-     <h3>Task Manager App</h3>
+      <Toaster />
+      <div className="task-container">
+        <TaskList />
+      </div>
     </div>
   );
 }
