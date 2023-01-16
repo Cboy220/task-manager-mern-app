@@ -1,6 +1,7 @@
 import { FaCheck, FaEdit, FaRegTrashAlt } from 'react-icons/fa'
 
 const Task = () => {
+
     return (
         <div className="task">
             <p>
