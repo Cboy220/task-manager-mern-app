@@ -1,15 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Task from "./Task"
 import TaskForm from "./TaskForm"
 import toast from 'react-hot-toast';
 import axios from 'axios'
+import loadingImg from "../assets/loader.gif";
 
 const TaskList = () => {
+    const [tasks, setTasks] = useState([])
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [taskID, setTaskID] = useState("");
+
     const [formData, setFormData] = useState({
         name: "",
         completed: false,
     });
     const { name } = formData;
+
+    const getTasks = async () => {
+        setIsLoading(true)
+        try {
+            const { data } = await axios.get('api/tasks')
+            console.log(data);
+            setTasks(data)
+            setIsLoading(false)
+
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    useEffect(() => {
+        getTasks()
+    }, [])
+
 
     const handleInputChange = (e) => {
         e.preventDefault();
@@ -22,7 +47,7 @@ const TaskList = () => {
             return toast.error("Input field cannot be empty");
         }
         try {
-            await axios.post('http://localhost:5000/api/tasks', formData)
+            await axios.post('/api/tasks', formData)
             toast.success("Task added successfully");
             setFormData({ ...formData, name: "" });
         } catch (error) {
@@ -46,7 +71,29 @@ const TaskList = () => {
                 </p>
             </div>
             <hr />
-            <Task />
+            {isLoading && (
+                <div className="--flex-center">
+                    <img src={loadingImg} alt="Loading" />
+                </div>
+            )}
+            {!isLoading && tasks.length === 0 ? (
+                <p className="--py">No task added. Please add a task</p>
+            ) : (
+                <>
+                    {tasks.map((task, index) => {
+                        return (
+                            <Task
+                                key={task._id}
+                                task={task}
+                                index={index}
+                                // deleteTask={deleteTask}
+                                // getSingleTask={getSingleTask}
+                                // setToComplete={setToComplete}
+                            />
+                        );
+                    })}
+                </>
+            )}
         </div>
     )
 }

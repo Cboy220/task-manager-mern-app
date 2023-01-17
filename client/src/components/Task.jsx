@@ -1,12 +1,12 @@
 import { FaCheck, FaEdit, FaRegTrashAlt } from 'react-icons/fa'
 
-const Task = () => {
+const Task = ({ task, index, deleteTask, getSingleTask, setToComplete }) => {
 
     return (
         <div className="task">
             <p>
-                <b>1.</b>
-                Task 1
+                <b>{index+1}</b>
+                {task.name}
             </p>
             <div className="task-icons">
                 <FaCheck color="green" />
