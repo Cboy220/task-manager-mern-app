@@ -400,6 +400,12 @@ p {
   .--flex-dir-column {
     flex-direction: column;
   }
+
+}
+@media screen and (min-width: 1100px) {
+  .task-container {
+    margin-left: 65rem;
+  }
 }
 
 .--block {
@@ -483,6 +489,7 @@ a:hover {
   box-shadow: var(--box-shadow);
   overflow: hidden;
   margin-top: 100px;
+  /* margin-left: 65rem; */
   padding: 3rem 2rem;
 }
 
