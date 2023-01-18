@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server/index.js",
-    "server": "node server/index.js",
+    "server": "nodemon server/index.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"yarn run server\" \"yarn run client\""
   },

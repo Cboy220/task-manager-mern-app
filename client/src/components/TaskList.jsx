@@ -21,7 +21,7 @@ const TaskList = () => {
     const getTasks = async () => {
         setIsLoading(true)
         try {
-            const { data } = await axios.get('api/tasks')
+            const { data } = await axios.get('https://task-manager-api-0hlc.onrender.com/api/tasks')
             console.log(data);
             setTasks(data)
             setIsLoading(false)
@@ -53,7 +53,7 @@ const TaskList = () => {
             return toast.error("Input field cannot be empty");
         }
         try {
-            await axios.post('/api/tasks', formData)
+            await axios.post('https://task-manager-api-0hlc.onrender.com/api/tasks', formData)
             toast.success("Task added successfully");
             setFormData({ ...formData, name: "" });
             getTasks();
@@ -64,7 +64,7 @@ const TaskList = () => {
 
     const deleteTask = async (id) => {
         try {
-            await axios.delete(`/api/tasks/${id}`)
+            await axios.delete(`https://task-manager-api-0hlc.onrender.com/api/tasks/${id}`)
             getTasks()
 
         } catch (error) {
@@ -78,7 +78,7 @@ const TaskList = () => {
             return toast.error("Input field cannot be empty.");
         }
         try {
-            await axios.put(`api/tasks/${taskID}`, formData)
+            await axios.put(`https://task-manager-api-0hlc.onrender.com/api/tasks/${taskID}`, formData)
             setFormData({ ...formData, name: '' })
             setIsEditing(false);
             getTasks()
@@ -92,7 +92,7 @@ const TaskList = () => {
             completed: true,
         }
         try {
-            await axios.put(`api/tasks/${task._id}`, newFormData)
+            await axios.put(`https://task-manager-api-0hlc.onrender.com/api/tasks/${task._id}`, newFormData)
             getTasks();
         } catch (error) {
             toast.error(error.message)
