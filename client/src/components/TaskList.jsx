@@ -28,6 +28,7 @@ const TaskList = () => {
 
         } catch (error) {
             toast.error(error.message)
+            setIsLoading(false);
         }
     }
 
@@ -35,6 +36,11 @@ const TaskList = () => {
         getTasks()
     }, [])
 
+    const getSingleTask = async (task) => {
+        setFormData({ name: task.name, completed: false });
+        setTaskID(task._id);
+        setIsEditing(true);
+    }
 
     const handleInputChange = (e) => {
         e.preventDefault();
@@ -64,6 +70,21 @@ const TaskList = () => {
             toast.error(error.message)
         }
     }
+
+    const updateTask = async (e) => {
+        e.preventDefault()
+        if (name === "") {
+            return toast.error("Input field cannot be empty.");
+        }
+        try {
+            await axios.put(`api/tasks/${taskID}`, formData)
+            setFormData({ ...formData, name: '' })
+            setIsEditing(false);
+            getTasks()
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
     return (
         <div>
             <h2>Task Manager</h2>
@@ -71,6 +92,8 @@ const TaskList = () => {
                 name={name}
                 handleInputChange={handleInputChange}
                 createTask={createTask}
+                isEditing={isEditing}
+                updateTask={updateTask}
             />
             <div className="--flex-between --pb">
                 <p>
@@ -97,7 +120,7 @@ const TaskList = () => {
                                 task={task}
                                 index={index}
                                 deleteTask={deleteTask}
-                            // getSingleTask={getSingleTask}
+                                getSingleTask={getSingleTask}
                             // setToComplete={setToComplete}
                             />
                         );
